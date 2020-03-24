@@ -6,8 +6,8 @@
   "license": "See in LICENSE",
   "homepage": "https://medium.com/",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/simonestaffa/how-to-rest-api-basic"
+    "type": "git",
+    "url": "https://github.com/simonestaffa/how-to-rest-api-basic"
   },
   "main": "dist/index.js",
   "scripts": {
@@ -18,8 +18,12 @@
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert"
   },
-  "keywords": ["rest-api","expressjs","nodejs","typescript"],
-
+  "keywords": [
+    "rest-api",
+    "expressjs",
+    "nodejs",
+    "typescript"
+  ],
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
     "@types/express": "^4.17.3",
