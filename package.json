@@ -1,0 +1,37 @@
+{
+  "name": "how-to-rest-api-basic",
+  "version": "1.0.0",
+  "description": "A tutorial on how to build a basic REST API",
+  "author": "Simone Staffa",
+  "license": "See in LICENSE",
+  "homepage": "https://medium.com/",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/simonestaffa/how-to-rest-api-basic"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "prebuild": "rm -rf dist/* && tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc && cp -rf package.json dist/package.json && cp -rf database.db dist/database.db",
+    "prestart": "npm run build",
+    "start": "ts-node .",
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert"
+  },
+  "keywords": ["rest-api","expressjs","nodejs","typescript"],
+
+  "devDependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.3",
+    "sqlite3": "^4.1.1",
+    "ts-node": "^8.7.0",
+    "tsc": "^1.20150623.0",
+    "tslint": "^6.1.0",
+    "typeorm": "^0.2.24",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
