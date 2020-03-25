@@ -1,4 +1,3 @@
-import {describe} from "mocha";
 const assert = require('assert');
 describe('Array', function() {
   describe('#indexOf()', function() {
