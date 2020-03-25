@@ -4,10 +4,14 @@ import {
     Entity,
     PrimaryGeneratedColumn,
 } from "typeorm";
-@Entity('shopCategory')
-export class ShopCategory extends BaseEntity{
+
+@Entity('categories')
+export class Category extends BaseEntity{
+
     @PrimaryGeneratedColumn()
     id: number;
+
     @Column()
     name: string;
+
 }

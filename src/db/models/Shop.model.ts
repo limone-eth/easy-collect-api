@@ -1,23 +1,55 @@
 import {
     BaseEntity,
     Column,
-    Entity, ManyToMany,
+    Entity, OneToOne,
     PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn
 } from "typeorm";
-import {ShopCategory} from "./ShopCategory.model";
+import {Category} from "./Category.model";
 
-@Entity('shop')
+@Entity('shops')
 export class Shop extends BaseEntity{
+
     @PrimaryGeneratedColumn()
     id: number;
+
     @Column()
     name: string;
+
     @Column()
     address: string;
+
     @Column()
-    lat_long: string;
+    lat: number;
+
+    @Column()
+    lng: number;
+
+    @Column()
+    phone: string;
+
+    @Column()
+    telegram: string;
+
+    @Column()
+    facebook: number;
+
+    @Column()
+    categories_id: number;
+
+    @Column()
+    is_deleted: boolean;
+
+    @CreateDateColumn() 
+    created_at: Date;
+
+    @UpdateDateColumn()
+    updated_at: Date;
+
     @Column()
     contact: string;
-    @ManyToMany(type => ShopCategory, shopCategory => shopCategory.name)
-    shop_category: ShopCategory[]
+
+    @OneToOne(type => Category, category => category.name)
+    category: Category[]
 }
