@@ -40,11 +40,6 @@ export class CreateShopsTable1585122993188 implements MigrationInterface {
                     isNullable: false
                 },
                 {
-                    name: "categories_id",
-                    type: "integer",
-                    isNullable: false
-                },
-                {
                     name: "phone",
                     type: "varchar",
                     isNullable: true
