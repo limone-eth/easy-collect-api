@@ -14,6 +14,12 @@ export class CreateShopsTable1585122993188 implements MigrationInterface {
                     generationStrategy: 'increment'
                 },
                 {
+                    name: "naturalKey",
+                    type: "varchar",
+                    isNullable: false,
+                    isUnique: true
+                },
+                {
                     name: "name",
                     type: "varchar",
                     isNullable: false,

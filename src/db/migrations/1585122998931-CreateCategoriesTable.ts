@@ -14,6 +14,12 @@ export class CreateCategoriesTable1585122998931 implements MigrationInterface {
                     generationStrategy: 'increment'
                 },
                 {
+                    name: "naturalKey",
+                    type: "varchar",
+                    isNullable: false,
+                    isUnique: true
+                },
+                {
                     name: "name",
                     type: "varchar",
                     isNullable: false,
