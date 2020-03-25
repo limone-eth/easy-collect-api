@@ -12,7 +12,7 @@ export class Category extends BaseEntity {
     id: number;
 
     @Column()
-    naturalKey: string;
+    natural_key: string;
 
     @Column()
     name: string;

@@ -7,20 +7,20 @@ import {
 import {Category} from "./Category.model";
 import {Shop} from "./Shop.model";
 
-@Entity('Shop_Has_Categories')
+@Entity('shop_has_categories')
 export class ShopHasCategories extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    naturalKey: string;
+    natural_key: string;
 
     @Column()
-    categoriesId: string;
+    categories_id: string;
 
     @Column()
-    shopsId: string;
+    shops_id: string;
 
     @CreateDateColumn()
     created_at: Date;

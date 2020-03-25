@@ -15,7 +15,7 @@ export class Shop extends BaseEntity {
     id: number;
 
     @Column()
-    naturalKey: string;
+    natural_key: string;
 
     @Column()
     name: string;
@@ -39,7 +39,7 @@ export class Shop extends BaseEntity {
     facebook: number;
 
     @Column()
-    categories_id: number;
+    description: string;
 
     @Column()
     is_deleted: boolean;
@@ -51,6 +51,6 @@ export class Shop extends BaseEntity {
     updated_at: Date;
 
     @ManyToMany(type => Category)
-    @JoinTable({name: 'Shop_Has_Categories'})
+    @JoinTable({name: 'shop_has_categories'})
     categories: Category[];
 }
