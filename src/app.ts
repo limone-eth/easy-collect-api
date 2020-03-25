@@ -79,9 +79,6 @@ app.put('/shops/:id', async (req,res) => {
         if (req.body.facebook){
             shop.facebook = req.body.facebook;
         }
-        if (req.body.categories_id){
-            shop.categories_id = req.body.categories_id;
-        }
         await shop.save();
         res.send(shop);
     } else {
