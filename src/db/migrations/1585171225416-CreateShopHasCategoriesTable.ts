@@ -1,10 +1,10 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreateShopsTable1585122993188 implements MigrationInterface {
+export class CreateShopHasCategoriesTable1585171225416 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         return await queryRunner.createTable(new Table({
-            name: "shops",
+            name: "shop_has_categories",
             columns: [
                 {
                     name: "id",
@@ -20,50 +20,14 @@ export class CreateShopsTable1585122993188 implements MigrationInterface {
                     isUnique: true
                 },
                 {
-                    name: "name",
+                    name: "categories_id",
                     type: "varchar",
                     isNullable: false,
                 },
                 {
-                    name: "address",
+                    name: "shops_id",
                     type: "varchar",
-                    isNullable: false
-                },
-                {
-                    name: "lat",
-                    type: "float",
-                    isNullable: false
-                },
-                {
-                    name: "lng",
-                    type: "float",
-                    isNullable: false
-                },
-                {
-                    name: "phone",
-                    type: "varchar",
-                    isNullable: true
-                },
-                {
-                    name: "telegram",
-                    type: "varchar",
-                    isNullable: true
-                },
-                {
-                    name: "facebook",
-                    type: "varchar",
-                    isNullable: true
-                },
-                {
-                    name: "description",
-                    type: "varchar",
-                    isNullable: true
-                },
-                {
-                    name: "is_deleted",
-                    type: "boolean",
                     isNullable: false,
-                    default: false
                 },
                 {
                     name: 'created_at',
@@ -79,10 +43,11 @@ export class CreateShopsTable1585122993188 implements MigrationInterface {
                 },
             ]
         }), true);
+
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
-        return await queryRunner.dropTable("shops");
+        return await queryRunner.dropTable("shop_has_categories");
     }
 
 }

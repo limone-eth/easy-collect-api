@@ -1,18 +1,21 @@
 import {
     BaseEntity,
     Column,
-    Entity, OneToOne,
+    Entity,
     PrimaryGeneratedColumn,
     CreateDateColumn,
-    UpdateDateColumn
+    UpdateDateColumn, ManyToMany, JoinTable
 } from "typeorm";
 import {Category} from "./Category.model";
 
 @Entity('shops')
-export class Shop extends BaseEntity{
+export class Shop extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
+
+    @Column()
+    natural_key: string;
 
     @Column()
     name: string;
@@ -36,20 +39,18 @@ export class Shop extends BaseEntity{
     facebook: number;
 
     @Column()
-    categories_id: number;
+    description: string;
 
     @Column()
     is_deleted: boolean;
 
-    @CreateDateColumn() 
+    @CreateDateColumn()
     created_at: Date;
 
     @UpdateDateColumn()
     updated_at: Date;
 
-    @Column()
-    contact: string;
-
-    @OneToOne(type => Category)
-    category: Category[]
+    @ManyToMany(type => Category)
+    @JoinTable({name: 'shop_has_categories'})
+    categories: Category[];
 }

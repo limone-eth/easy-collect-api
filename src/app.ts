@@ -26,7 +26,6 @@ app.post('/shops', async (req,res) => {
     shop.phone = req.body.phone;
     shop.telegram = req.body.telegram;
     shop.facebook = req.body.facebook;
-    shop.categories_id = req.body.categories_id;
     await shop.save();
     res.send(shop);
 });
@@ -79,9 +78,6 @@ app.put('/shops/:id', async (req,res) => {
         }
         if (req.body.facebook){
             shop.facebook = req.body.facebook;
-        }
-        if (req.body.categories_id){
-            shop.categories_id = req.body.categories_id;
         }
         await shop.save();
         res.send(shop);
