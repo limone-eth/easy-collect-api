@@ -50,6 +50,6 @@ export class Shop extends BaseEntity{
     @Column()
     contact: string;
 
-    @OneToOne(type => Category, category => category.name)
+    @OneToOne(type => Category)
     category: Category[]
 }
