@@ -4,14 +4,14 @@ import {
     Entity,
     PrimaryGeneratedColumn,
 } from "typeorm";
-@Entity('movies')
-export class Movie extends BaseEntity{
+
+@Entity('categories')
+export class Category extends BaseEntity{
+
     @PrimaryGeneratedColumn()
     id: number;
+
     @Column()
-    title: string;
-    @Column()
-    plot_summary: string;
-    @Column()
-    duration: number;
+    name: string;
+
 }

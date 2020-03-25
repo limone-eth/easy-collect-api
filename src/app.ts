@@ -1,6 +1,6 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
-import {Movie} from "./db/models/Movie.model";
+import {Shop} from "./db/models/Shop.model";
 import {connect} from "./db/db";
 
 connect();
@@ -17,71 +17,91 @@ app.use(bodyParser.json({
 app.get('/', (req, res) => res.send('Hello World!'));
 
 // CREATE
-app.post('/movies', async (req,res) => {
-    const movie = new Movie();
-    movie.title = req.body.title;
-    movie.plot_summary = req.body.plot_summary;
-    movie.duration = req.body.duration;
-    await movie.save();
-    res.send(movie);
+app.post('/shops', async (req,res) => {
+    const shop = new Shop();
+    shop.name = req.body.name;
+    shop.address = req.body.address;
+    shop.lat = req.body.lat;
+    shop.lng = req.body.lng;
+    shop.phone = req.body.phone;
+    shop.telegram = req.body.telegram;
+    shop.facebook = req.body.facebook;
+    shop.categories_id = req.body.categories_id;
+    await shop.save();
+    res.send(shop);
 });
 
 // READ
-app.get('/movies', async (req,res) => {
-    const movies = await Movie.find();
-    res.send(movies);
+app.get('/shops', async (req,res) => {
+    const shops = await Shop.find();
+    res.send(shops);
 });
 
 // READ SINGLE
-app.get('/movies/:id', async (req,res) => {
-    const movie = await Movie.findOne({
+app.get('/shops/:id', async (req,res) => {
+    const shop = await Shop.findOne({
         where: {
             id: req.params.id
         }
     });
-    if (movie){
-        res.send(movie);
+    if (shop){
+        res.send(shop);
     } else {
-        res.status(404).send({message: "Movie not found"})
+        res.status(404).send({message: "Shop not found"})
     }
 });
 
 // UPDATE
-app.put('/movies/:id', async (req,res) => {
-    const movie = await Movie.findOne({
+app.put('/shops/:id', async (req,res) => {
+    const shop = await Shop.findOne({
         where: {
             id: req.params.id
         }
     });
-    if (movie){
-        if (req.body.title) {
-            movie.title = req.body.title;
+    if (shop){
+        if (req.body.name) {
+            shop.name = req.body.name;
         }
-        if (req.body.plot_summary){
-            movie.plot_summary = req.body.plot_summary;
+        if (req.body.address){
+            shop.address = req.body.address;
         }
-        if (req.body.duration){
-            movie.duration = req.body.duration;
+        if (req.body.lat){
+            shop.lat = req.body.lat;
         }
-        await movie.save();
-        res.send(movie);
+        if (req.body.lng){
+            shop.lng = req.body.lng;
+        }
+        if (req.body.phone){
+            shop.phone = req.body.phone;
+        }
+        if (req.body.telegram){
+            shop.telegram = req.body.telegram;
+        }
+        if (req.body.facebook){
+            shop.facebook = req.body.facebook;
+        }
+        if (req.body.categories_id){
+            shop.categories_id = req.body.categories_id;
+        }
+        await shop.save();
+        res.send(shop);
     } else {
-        res.status(404).send({message: "Movie not found"})
+        res.status(404).send({message: "Shop not found"})
     }
 });
 
 // DELETE
-app.delete('/movies/:id', async (req,res) => {
-    const movie = await Movie.findOne({
+app.delete('/shops/:id', async (req,res) => {
+    const shop = await Shop.findOne({
         where: {
             id: req.params.id
         }
     });
-    if (movie){
-        await movie.remove();
-        res.send({message: 'Movie deleted'});
+    if (shop){
+        await shop.remove();
+        res.send({message: 'Shop deleted'});
     } else {
-        res.status(404).send({message: "Movie not found"})
+        res.status(404).send({message: "Shop not found"})
     }
 });
 
