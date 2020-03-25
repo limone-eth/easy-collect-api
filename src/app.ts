@@ -5,6 +5,7 @@ import {connect} from "./db/db";
 
 connect();
 
+
 const app = express();
 app.use(bodyParser.json({
     limit: '50mb',
