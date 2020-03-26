@@ -4,6 +4,7 @@ import {Shop} from "./db/models/Shop.model";
 import {connect} from "./db/db";
 import {ShopHasCategories} from "./db/models/Shop_Has_Categories";
 import {Column} from "typeorm";
+import { Category } from './db/models/Category.model';
 
 connect();
 
@@ -28,7 +29,15 @@ app.post('/shops', async (req, res) => {
     shop.phone = req.body.phone;
     shop.telegram = req.body.telegram;
     shop.facebook = req.body.facebook;
-    shop.categories = req.body.categories_ids;
+    shop.categories = [];
+    for (const cat_id in req.body.categories_ids){
+        const category = await Category.findOne({
+            where: {
+                id: cat_id
+            }
+        });
+        shop.categories.push(category);
+    }
     await shop.save();
     if (shop.categories && shop.categories.length <= 3) {
         for (const category of shop.categories) {
