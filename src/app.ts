@@ -13,12 +13,22 @@ connect();
 
 
 const app = express();
+
 app.use(bodyParser.json({
     limit: '50mb',
     verify(req: any, res, buf, encoding) {
         req.rawBody = buf;
     }
 }));
+
+// ***** Local env only ****
+app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, x-team");
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, OPTIONS, DELETE');
+    next()
+});
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
