@@ -29,7 +29,7 @@ app.post('/shops', async (req, res) => {
     shop.address = req.body.address;
     const options: Options = {
         provider: 'opencage',
-        apiKey: 'cbaac7da04934c418f6e082b76467102'
+        apiKey: process.env.OPEN_CAGE_API_KEY
     };
     const geocoder = node_geocoder(options);
 
