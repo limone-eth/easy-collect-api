@@ -25,8 +25,8 @@ Retrieve all available shops
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
-| filter | query | pass an optional search string for looking up name or description Shop | No | string |
-| categories_id | query | pass an optional search string for looking up Shop name or description | No | integer |
+| filter | query | pass an optional search string for looking up name or address Shop | No | string |
+| categories_id | query | pass an optional search number to filter by category | No | integer |
 
 ##### Responses
 
