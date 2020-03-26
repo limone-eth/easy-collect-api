@@ -31,8 +31,8 @@ export class RetrieveV1 extends RequestController {
         } else if (req.query.filter) {
             shops = await Shop.find({
                 where: [
-                    {name: Like("%" + filter + "%")},
-                    {description: Like("%" + filter + "%")}
+                    {name: Like("%" + filter + "%"), is_deleted: false},
+                    {description: Like("%" + filter + "%"), is_deleted: false}
                 ]
             });
         } else if (categories_id) {
