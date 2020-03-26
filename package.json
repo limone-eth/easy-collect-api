@@ -12,7 +12,7 @@
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "rm -rf dist/* && tslint -c tslint.json -p tsconfig.json --fix",
-    "build": "tsc && cp -rf package.json dist/package.json && cp -rf database.db dist/database.db",
+    "build": "tsc && cp -rf package.json dist/package.json",
     "prestart": "npm run build",
     "start": "ts-node .",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",

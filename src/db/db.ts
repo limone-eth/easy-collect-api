@@ -2,10 +2,10 @@ import {createConnection} from "typeorm";
 export let connect = async () => {
     const connection = await createConnection({
         "type": "mysql",
-        "host":"eu-cdbr-west-02.cleardb.net",
-        "username":"be2ebac224559b",
-        "password":"8c353cc1",
-        "database":"heroku_60b35230388ffab",
+        "host":process.env.DB_HOSTNAME,
+        "username":process.env.DB_USERNAME,
+        "password":process.env.DB_PASSWORD,
+        "database":process.env.DB_NAME,
         "synchronize": false,
         "logging": true,
         "migrationsTableName": "custom_migration_table",

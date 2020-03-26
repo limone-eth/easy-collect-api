@@ -56,7 +56,17 @@ export class Shop extends BaseEntity {
     @UpdateDateColumn()
     updated_at: Date;
 
-    @ManyToMany(type => Category)
-    @JoinTable({name: 'shop_has_categories'})
+    @ManyToMany(type => Category, {eager: true})
+    @JoinTable({
+        name: 'shop_has_categories',
+        joinColumn: {
+            name: "shops_id",
+            referencedColumnName: "id"
+        },
+        inverseJoinColumn: {
+            name: "categories_id",
+            referencedColumnName: "id"
+        }
+    })
     categories: Category[];
 }
