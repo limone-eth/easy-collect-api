@@ -109,7 +109,7 @@ app.get('/shops', async (req, res) => {
         shops = await Shop.find({
             where: [
                 {name: Like("%" + filter + "%")},
-                {description: Like("%" + filter + "%")}
+                {address: Like("%" + filter + "%")}
             ]
         });
     } else if (categories_id) {
