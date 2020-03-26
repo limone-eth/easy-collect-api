@@ -24,6 +24,12 @@ export class Shop extends BaseEntity {
     address: string;
 
     @Column()
+    city: string;
+
+    @Column()
+    cap: string;
+
+    @Column()
     lat: number;
 
     @Column()
