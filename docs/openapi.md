@@ -44,6 +44,20 @@ adds a Shop
 
 Adds a Shop to the system
 
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| name | body | Shop name | Yes | string |
+| description | body | Shop description | No | string |
+| address | body | Shop address | Yes | string |
+| categories_ids | body | Array of category_id (max 3) | Yes | array<number> |
+| phone | body | Shop phone number | No | string |
+| telegram | body | Shop telegram channel link | No | string |
+| facebook | body | Shop facebook page | No | string |
+
+Note: at least one of "phone", "telegram" and "facebook" must be present in the request
+
 ##### Responses
 
 | Code | Description |
