@@ -8,6 +8,8 @@ import {Category} from './db/models/Category.model';
 
 import node_geocoder = require("node-geocoder");
 import {Options} from "node-geocoder";
+import {IndexRoute} from "./api";
+import {ErrorHandler} from "./components/ErrorHandler";
 
 connect();
 
@@ -20,20 +22,46 @@ app.use(bodyParser.json({
         req.rawBody = buf;
     }
 }));
+app.use(bodyParser.urlencoded({extended: false}));
+app.set('view engine', 'j2');
+app.set('x-powered-by', false); // disable x-powered-by header
+app.set('trust proxy', 1); // use X-Forwarded-For header
+
 
 // ***** Local env only ****
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, x-team");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, OPTIONS, DELETE');
     next()
 });
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    req.version = req.header('accept-version');
+    req.requestTime = new Date();
+    next();
+});
+
+app.use('', new IndexRoute().initRouter());
+app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    next();
+});
+
+app.all('*', (req: express.Request, res: express.Response) => {
+    throw new Error("Bad request")
+});
+app.use((e: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (e.message === "Bad request") {
+        res.status(400).json({message: e.message});
+    }
+});
+app.use(new ErrorHandler().errorHandler);
+
+export {app};
 
 // CREATE
-app.post('/shops', async (req, res) => {
+/*app.post('/shops', async (req, res) => {
     const shop = new Shop();
     shop.name = req.body.name;
     shop.address = req.body.address;
@@ -195,7 +223,7 @@ app.delete('/shops/:id', async (req, res) => {
     }
 }); */
 
-app.get('/categories', async (req, res) => {
+/*app.get('/categories', async (req, res) => {
     const categories = await Category.find({
         where: {
             is_deleted: false
@@ -207,4 +235,4 @@ app.get('/categories', async (req, res) => {
     res.send(categories);
 });
 
-export {app};
+export {app};*/
