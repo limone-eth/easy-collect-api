@@ -95,26 +95,17 @@ async function addCategoriesToShop(shops_id: number, categories_ids: number[]) {
 app.get('/shops', async (req, res) => {
     const filter = "%" + req.query.filter + "%";
     const categories_id = req.query.categories_id;
-    const whereArray: any[] = [];
-    if (categories_id) {
-        whereArray.push({
-            categories_id,
-        });
-        whereArray.push({
-            categories_id
-        });
-    }
     let shops;
-    if (filter && categories_id) {
+    if (req.query.filter && categories_id) {
         shops = await createQueryBuilder(Shop, "shops")
             .innerJoin("shop_has_categories", "shc",
                 "shc.shops_id = shops.id and shc.categories_id = :categories_id", {categories_id})
             .innerJoin("shop_has_categories", "shc_2",
                 "shc_2.shops_id = shc.shops_id")
             .innerJoinAndSelect("shops.categories", "categories", "categories.id = shc_2.categories_id")
-            .where("shops.is_deleted = false and (shops.name like :filter or shops.description like :filter)", {filter})
+            .where("shops.is_deleted = false and (shops.name like :filter or shops.address like :filter)", {filter})
             .getMany();
-    } else if (filter) {
+    } else if (req.query.filter) {
         shops = await Shop.find({
             where: [
                 {name: Like("%" + filter + "%")},
