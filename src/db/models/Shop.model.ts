@@ -7,6 +7,8 @@ import {
     UpdateDateColumn, ManyToMany, JoinTable
 } from "typeorm";
 import {Category} from "./Category.model";
+import {Options} from "node-geocoder";
+import node_geocoder = require("node-geocoder");
 
 @Entity('shops')
 export class Shop extends BaseEntity {
@@ -69,4 +71,21 @@ export class Shop extends BaseEntity {
         }
     })
     categories: Category[];
+
+
+    /**
+     * METHODS
+     */
+    async setCoordinatesFromAddress(): Promise<Shop> {
+        const options: Options = {
+            provider: 'opencage',
+            apiKey: process.env.OPEN_CAGE_API_KEY
+        };
+        const geocoder = node_geocoder(options);
+
+        const response = await geocoder.geocode(this.address);
+        this.lat = response[0].latitude;
+        this.lng = response[0].longitude;
+        return this;
+    }
 }
