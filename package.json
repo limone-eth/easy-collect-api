@@ -1,13 +1,13 @@
 {
-  "name": "how-to-rest-api-basic",
+  "name": "easy-collect-api",
   "version": "1.0.0",
   "description": "A tutorial on how to build a basic REST API",
   "author": "Simone Staffa",
   "license": "See in LICENSE",
-  "homepage": "https://medium.com/",
+  "homepage": "https://github.com/andreavitaletti/spesa",
   "repository": {
     "type": "git",
-    "url": "https://github.com/simonestaffa/how-to-rest-api-basic"
+    "url": "https://github.com/simonestaffa/easy-collect-api"
   },
   "main": "dist/src/index.js",
   "scripts": {
