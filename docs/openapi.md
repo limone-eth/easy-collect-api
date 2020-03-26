@@ -1,101 +1,379 @@
-# EasyCollect API
+
+EasyCollect API
+===============
+
 This is a simple API to manage EasyCollect
 
+Access
+------
 
-## Version: 1.0.0
+Methods
+-------
 
-**Contact information:**  
-you@your-company.com  
+\[ Jump to [Models](#__Models) \]
 
-**License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+### Table of Contents
 
-### /shops
+#### [Categories](#Categories)
 
-#### GET
-##### Summary:
+*   [`get /categories`](#categoriesGet)
 
-retrieve all shops
+#### [Shops](#Shops)
 
-##### Description:
+*   [`post /shops`](#addShop)
+*   [`get /shops`](#getShops)
+*   [`get /shops/{id}`](#shopsIdGet)
 
-Retrieve all available shops
+Categories
+==========
 
+[Up](#__Methods)
 
-##### Parameters
+    get /categories
 
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| filter | query | pass an optional search string to search shops by name or address | No | string |
-| categories_id | query | pass an optional parameter to filter by category | No | integer |
+retrieve all categories (categoriesGet)
 
-##### Responses
+### Return type
 
-| Code | Description |
-| ---- | ----------- |
-| 200 | search results matching criteria |
-| 400 | bad input parameter |
+array\[[Category](#Category)\]
 
-#### POST
-##### Summary:
+### Example data
 
-adds a Shop
+Content-Type: application/json
 
-##### Description:
+    [ {
+      "natural_key" : "1234_4345",
+      "name" : "Macelleria",
+      "id" : 12334
+    }, {
+      "natural_key" : "1234_4345",
+      "name" : "Macelleria",
+      "id" : 12334
+    } ]
+
+### Produces
+
+This API call produces the following media types according to the Accept request header; the media type will be conveyed by the Content-Type response header.
+
+*   `application/json`
+
+### Responses
+
+#### 200
+
+search results ordered ASC
+
+* * *
+
+Shops
+=====
+
+[Up](#__Methods)
+
+    post /shops
+
+adds a Shop (addShop)
 
 Adds a Shop to the system
 
-##### Parameters
+### Consumes
 
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| name | body | Shop name | Yes | string |
-| description | body | Shop description | No | string |
-| address | body | Shop address | Yes | string |
-| categories_ids | body | Array of category_id (max 3) | Yes | array<number> |
-| phone | body | Shop phone number | No | string |
-| telegram | body | Shop telegram channel link | No | string |
-| facebook | body | Shop facebook page | No | string |
+This API call consumes the following media types via the Content-Type request header:
 
-Note: at least one of "phone", "telegram" and "facebook" must be present in the request
+*   `application/json`
 
-##### Responses
+### Request body
 
-| Code | Description |
-| ---- | ----------- |
-| 201 | item created |
-| 400 | invalid input, object invalid |
-| 409 | an existing item already exists |
+body [Shop](#Shop) (optional)
 
-### /shops/{id}
+Body Parameter — Shop item to add
 
-#### GET
-##### Summary:
+### Return type
 
-retrieve information of a single Shop
+[Shop](#Shop)
 
-##### Parameters
+### Example data
 
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| id | path | Numeric ID of the Shop to get | Yes | integer |
+Content-Type: application/json
 
-##### Responses
+    {
+      "lng" : 133,
+      "natural_key" : "Macelleria del Corso_100_100",
+      "facebook" : "https://www.facebook.com/macelleriaMarioRossi",
+      "telegram" : "https://www.telegram.com/macelleriaMarioRossi",
+      "description" : "Piccola bottega dal 1920",
+      "created_at" : "2000-01-23",
+      "addess" : "Via Roma 133",
+      "is_deleted" : false,
+      "updated_at" : "2000-01-23",
+      "phone" : "333-5607123",
+      "name" : "Macelleria del Corso",
+      "id" : 12334,
+      "categories" : [ 0, 1, 4 ],
+      "lat" : 122
+    }
 
-| Code | Description |
-| ---- | ----------- |
-| 200 | Item retrieved successfully |
-| 404 | Item not found |
+### Produces
 
-### /categories/
+This API call produces the following media types according to the Accept request header; the media type will be conveyed by the Content-Type response header.
 
-#### GET
-##### Summary:
+*   `application/json`
 
-retrieve the list of available categories
+### Responses
 
-##### Responses
+#### 200
 
-| Code | Description |
-| ---- | ----------- |
-| 200 | Item retrieved successfully |
-| 404 | Item not found |
+item created [Shop](#Shop)
+
+#### 400
+
+invalid input, object invalid[](#)
+
+#### 409
+
+an existing item already exists[](#)
+
+* * *
+
+[Up](#__Methods)
+
+    get /shops
+
+retrieve all shops (getShops)
+
+Retrieve all available shops
+
+### Query parameters
+
+filter (optional)
+
+Query Parameter — pass an optional search string for looking up name or description Shop
+
+categories\_id (optional)
+
+Query Parameter — pass an optional search string for looking up Shop name or description
+
+### Return type
+
+array\[[Shop](#Shop)\]
+
+### Example data
+
+Content-Type: application/json
+
+    [ {
+      "lng" : 133,
+      "natural_key" : "Macelleria del Corso_100_100",
+      "facebook" : "https://www.facebook.com/macelleriaMarioRossi",
+      "telegram" : "https://www.telegram.com/macelleriaMarioRossi",
+      "description" : "Piccola bottega dal 1920",
+      "created_at" : "2000-01-23",
+      "addess" : "Via Roma 133",
+      "is_deleted" : false,
+      "updated_at" : "2000-01-23",
+      "phone" : "333-5607123",
+      "name" : "Macelleria del Corso",
+      "id" : 12334,
+      "categories" : [ 0, 1, 4 ],
+      "lat" : 122
+    }, {
+      "lng" : 133,
+      "natural_key" : "Macelleria del Corso_100_100",
+      "facebook" : "https://www.facebook.com/macelleriaMarioRossi",
+      "telegram" : "https://www.telegram.com/macelleriaMarioRossi",
+      "description" : "Piccola bottega dal 1920",
+      "created_at" : "2000-01-23",
+      "addess" : "Via Roma 133",
+      "is_deleted" : false,
+      "updated_at" : "2000-01-23",
+      "phone" : "333-5607123",
+      "name" : "Macelleria del Corso",
+      "id" : 12334,
+      "categories" : [ 0, 1, 4 ],
+      "lat" : 122
+    } ]
+
+### Produces
+
+This API call produces the following media types according to the Accept request header; the media type will be conveyed by the Content-Type response header.
+
+*   `application/json`
+
+### Responses
+
+#### 200
+
+search results matching criteria
+
+#### 400
+
+bad input parameter[](#)
+
+* * *
+
+[Up](#__Methods)
+
+    get /shops/{id}
+
+retrieve information of a single Shop (shopsIdGet)
+
+### Path parameters
+
+id (required)
+
+Path Parameter — Numeric ID of the Shop to get
+
+### Return type
+
+[Shop](#Shop)
+
+### Example data
+
+Content-Type: application/json
+
+    {
+      "lng" : 133,
+      "natural_key" : "Macelleria del Corso_100_100",
+      "facebook" : "https://www.facebook.com/macelleriaMarioRossi",
+      "telegram" : "https://www.telegram.com/macelleriaMarioRossi",
+      "description" : "Piccola bottega dal 1920",
+      "created_at" : "2000-01-23",
+      "addess" : "Via Roma 133",
+      "is_deleted" : false,
+      "updated_at" : "2000-01-23",
+      "phone" : "333-5607123",
+      "name" : "Macelleria del Corso",
+      "id" : 12334,
+      "categories" : [ 0, 1, 4 ],
+      "lat" : 122
+    }
+
+### Produces
+
+This API call produces the following media types according to the Accept request header; the media type will be conveyed by the Content-Type response header.
+
+*   `application/json`
+
+### Responses
+
+#### 200
+
+Item retrieved successfully [Shop](#Shop)
+
+#### 404
+
+Shop not found[](#)
+
+* * *
+
+Models
+------
+
+\[ Jump to [Methods](#__Methods) \]
+
+### Table of Contents
+
+1.  [`Category`](#Category)
+2.  [`Shop`](#Shop)
+
+### `Category` [Up](#__Models)
+
+id (optional)
+
+[BigDecimal](#BigDecimal)
+
+example: 12334
+
+natural\_key
+
+[String](#string)
+
+example: 1234\_4345
+
+name
+
+[String](#string)
+
+example: Macelleria
+
+### `Shop` [Up](#__Models)
+
+id (optional)
+
+[BigDecimal](#BigDecimal)
+
+example: 12334
+
+natural\_key (optional)
+
+[String](#string)
+
+example: Macelleria del Corso\_100\_100
+
+name
+
+[String](#string)
+
+example: Macelleria del Corso
+
+addess (optional)
+
+[String](#string)
+
+example: Via Roma 133
+
+lat (optional)
+
+[BigDecimal](#BigDecimal)
+
+example: 122
+
+lng (optional)
+
+[BigDecimal](#BigDecimal)
+
+example: 133
+
+phone (optional)
+
+[String](#string)
+
+example: 333-5607123
+
+telegram (optional)
+
+[String](#string)
+
+example: https://www.telegram.com/macelleriaMarioRossi
+
+facebook (optional)
+
+[String](#string)
+
+example: https://www.facebook.com/macelleriaMarioRossi
+
+description
+
+[String](#string)
+
+example: Piccola bottega dal 1920
+
+is\_deleted (optional)
+
+[Boolean](#boolean)
+
+example: false
+
+created\_at (optional)
+
+[date](#date) format: date
+
+updated\_at (optional)
+
+[date](#date) format: date
+
+categories (optional)
+
+[array\[BigDecimal\]](#BigDecimal)
+
+example: \[0,1,4\]

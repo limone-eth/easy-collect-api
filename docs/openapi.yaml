@@ -1,50 +1,45 @@
 openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: EasyCollect API
+    url: https://localhost:5000
 info:
-  title: EasyCollect API
   description: This is a simple API to manage EasyCollect
+  version: "1.0.0"
+  title: EasyCollect API
   contact:
     email: you@your-company.com
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-
-  version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/fcolasante/easyCollect/1.0.0
-  description: SwaggerHub API Auto Mocking
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
-- name: shops
-  description: Shop descriptions such as name, location, telephone
-- name: categories
-  description: Enums such as Fruttivendolo, Macelleria,...
+  - name: shops
+    description: Shop descriptions such as name, location, telephone
+  - name: categories
+    description: Enums such as Fruttivendolo, Macelleria,...
 paths:
   /shops:
     get:
       tags:
-      - shops
+        - shops
       summary: retrieve all shops
-      description: Retrieve all available shops
       operationId: getShops
+      description: Retrieve all available shops
       parameters:
-      - name: filter
-        in: query
-        description: pass an optional search string for looking up name or description
-          Shop
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: categories_id
-        in: query
-        description: pass an optional search string for looking up Shop name or description
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
+        - in: query
+          name: filter
+          description: pass an optional search string for looking up name or description Shop 
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: categories_id
+          description: pass an optional search string for looking up Shop name or description
+          required: false
+          schema:
+            type: integer
       responses:
-        "200":
+        '200':
           description: search results matching criteria
           content:
             application/json:
@@ -52,123 +47,176 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Shop'
-        "400":
+        '400':
           description: bad input parameter
     post:
       tags:
-      - shops
+        - shops
       summary: adds a Shop
-      description: Adds a Shop to the system
       operationId: addShop
+      description: Adds a Shop to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
       requestBody:
-        description: Shop item to add
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Shop'
-      responses:
-        "201":
-          description: item created
-        "400":
-          description: invalid input, object invalid
-        "409":
-          description: an existing item already exists
+        description: Shop item to add
   /shops/{id}:
     get:
-      tags:
-      - shops
       summary: retrieve information of a single Shop
+      tags:
+        - shops
       parameters:
-      - name: id
-        in: path
-        description: Numeric ID of the Shop to get
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-        example: 1000
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Shop to get
+          example: 1000
       responses:
-        "200":
-          description: Item retrieved successfully
+        '200':
+          description: 'Item retrieved successfully'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Shop'
-        "404":
-          description: Item not found
+        '404':
+          description: 'Item not found'
+  /categories:
+    get:
+      tags:
+        - categories
+      summary: retrieve all categories
+      responses:
+        '200':
+          description: search results ordered ASC
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+#    put:
+#      tags:
+#      - shops
+#      summary: Update a Shop
+#      operationId: updateShop
+#      parameters:
+#        - in: path
+#          name: id
+#          schema:
+#            type: integer
+#          required: true
+#          description: Numeric ID of the Shop to get
+#          example: 1000
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/Shop'
+#      description:
+#        Update a Shop in db
+#      responses:
+#        '200':
+#          description: Shop updated correctly
+#        '404':
+#          description: Shop not found
+#    delete:
+#      tags:
+#        - shops
+#      summary: Delete shop from ID
+#      parameters:
+#        - in: path
+#          name: id
+#          schema:
+#            type: integer
+#          required: true
+#          description: Numeric ID of the user to get
+#          example: 1000
+#      responses:
+#        '200':
+#          description: 'Item deleted successfully'
+
 components:
   schemas:
     Shop:
-      required:
-      - address
-      - description
-      - name
       type: object
+      required:
+        - name
+        - address
+        - description
       properties:
         id:
           type: number
-          readOnly: true
           example: 12334
+          readOnly: true
         natural_key:
           type: string
+          example: 'Macelleria del Corso_100_100'
           readOnly: true
-          example: Macelleria del Corso_100_100
         name:
           type: string
-          example: Macelleria del Corso
+          example: 'Macelleria del Corso'
         addess:
           type: string
-          example: Via Roma 133
+          example: 'Via Roma 133'
         lat:
           type: number
-          readOnly: true
           example: 122
+          readOnly: true
         lng:
           type: number
-          readOnly: true
           example: 133
+          readOnly: true
         phone:
           type: string
-          example: 333-5607123
+          example: '333-5607123'
         telegram:
           type: string
         facebook:
           type: string
         description:
           type: string
-          example: Piccola bottega dal 1920
+          example: 'Piccola bottega dal 1920'
         is_deleted:
           type: boolean
-          readOnly: true
           example: false
+          readOnly: true
         created_at:
           type: string
           format: date
           readOnly: true
         updated_at:
-          type: string
+          type: string 
           format: date
           readOnly: true
         categories:
-          maxItems: 3
           type: array
-          items:
+          maxItems: 3
+          items: 
             type: number
     Category:
-      required:
-      - name
-      - natural_key
       type: object
+      required:
+        - natural_key
+        - name
       properties:
         id:
           type: number
-          readOnly: true
           example: 12334
+          readOnly: true
         natural_key:
           type: string
+          example: '1234_4345'
           readOnly: true
-          example: 1234_4345
         name:
           type: string
-          example: Macelleria
+          example: 'Macelleria'
