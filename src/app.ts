@@ -30,7 +30,7 @@ app.post('/shops', async (req, res) => {
     shop.telegram = req.body.telegram;
     shop.facebook = req.body.facebook;
     shop.categories = [];
-    for (const cat_id in req.body.categories_ids){
+    for (const cat_id of req.body.categories_ids){
         const category = await Category.findOne({
             where: {
                 id: cat_id
