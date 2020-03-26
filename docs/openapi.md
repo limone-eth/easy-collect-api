@@ -1,6 +1,7 @@
 # EasyCollect API
 This is a simple API to manage EasyCollect
 
+
 ## Version: 1.0.0
 
 **Contact information:**  
@@ -18,6 +19,7 @@ retrieve all shops
 ##### Description:
 
 Retrieve all available shops
+
 
 ##### Parameters
 
