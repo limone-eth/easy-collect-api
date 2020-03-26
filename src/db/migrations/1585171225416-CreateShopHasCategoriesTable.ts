@@ -21,12 +21,12 @@ export class CreateShopHasCategoriesTable1585171225416 implements MigrationInter
                 },
                 {
                     name: "categories_id",
-                    type: "varchar",
+                    type: "integer",
                     isNullable: false,
                 },
                 {
                     name: "shops_id",
-                    type: "varchar",
+                    type: "integer",
                     isNullable: false,
                 },
                 {
