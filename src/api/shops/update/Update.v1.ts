@@ -5,14 +5,21 @@ import {Request, Response, NextFunction} from "express";
 import * as Joi from "joi";
 import {XError} from "../../../routing-utilities/XError";
 import {Shop} from "../../../db/models/Shop.model";
+import {number} from "joi";
 
 export class UpdateV1 extends RequestController {
     validate?: Joi.JoiObject = Joi.object().keys({
         params: {
-            genres_id: Joi.number().required()
+            shops_id: Joi.number().required()
         },
         body: {
-            name: Joi.string().required()
+            name: Joi.string(),
+            address: Joi.string(),
+            description: Joi.string(),
+            categories_ids: Joi.array().items(number()),
+            telegram: Joi.string(),
+            facebook: Joi.string(),
+            phone: Joi.string(),
         }
     });
 

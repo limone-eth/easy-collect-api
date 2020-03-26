@@ -5,16 +5,21 @@ import {Request, Response, NextFunction} from "express";
 import * as Joi from "joi";
 import {Category} from "../../../db/models/Category.model";
 import {Shop} from "../../../db/models/Shop.model";
-import {Options} from "node-geocoder";
-import node_geocoder = require("node-geocoder");
 import {ShopHasCategories} from "../../../db/models/Shop_Has_Categories";
+import {number} from "joi";
 
 
 export class CreateV1 extends RequestController {
     validate?: Joi.JoiObject = Joi.object().keys({
-        body: {
-            name: Joi.string().required()
-        }
+        body: Joi.object().keys({
+            name: Joi.string().required(),
+            address: Joi.string().required(),
+            description: Joi.string().required(),
+            categories_ids: Joi.array().items(number()).required().length(3),
+            telegram: Joi.string(),
+            facebook: Joi.string(),
+            phone: Joi.string(),
+        }).or('facebook', 'telegram','phone')
     });
 
     async createShop(req: Request): Promise<Shop> {
@@ -28,12 +33,7 @@ export class CreateV1 extends RequestController {
         shop.telegram = req.body.telegram;
         shop.facebook = req.body.facebook;
         shop.categories = [];
-        try {
-            await shop.save();
-        } catch (err) {
-            // res.send(err);
-        }
-
+        await shop.save();
         for (const cat_id of req.body.categories_ids) {
             const category = await Category.findOne({
                 where: {
