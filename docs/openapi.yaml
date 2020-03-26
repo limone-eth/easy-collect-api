@@ -7,10 +7,11 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 0.1.0
+
+  version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/fcolasante/easyCollect/0.1.0
-  description: EasyCollect API
+- url: https://virtserver.swaggerhub.com/fcolasante/easyCollect/1.0.0
+  description: SwaggerHub API Auto Mocking
 tags:
 - name: shops
   description: Shop descriptions such as name, location, telephone
@@ -24,6 +25,24 @@ paths:
       summary: retrieve all shops
       description: Retrieve all available shops
       operationId: getShops
+      parameters:
+      - name: filter
+        in: query
+        description: pass an optional search string for looking up name or description
+          Shop
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: categories_id
+        in: query
+        description: pass an optional search string for looking up Shop name or description
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
       responses:
         "200":
           description: search results matching criteria
@@ -71,58 +90,30 @@ paths:
         example: 1000
       responses:
         "200":
-          description: Item deleted successfully
-    put:
-      tags:
-      - shops
-      summary: Update a Shop
-      description: Add new Event in Event db
-      operationId: putEvent
-      parameters:
-      - name: id
-        in: path
-        description: Numeric ID of the Shop to get
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-        example: 1000
-      responses:
-        "200":
-          description: Entry inserted correctly
-    delete:
-      tags:
-      - shops
-      summary: Delete shop from ID
-      parameters:
-      - name: id
-        in: path
-        description: Numeric ID of the user to get
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-        example: 1000
-      responses:
-        "200":
-          description: Item deleted successfully
+          description: Item retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shop'
+        "404":
+          description: Item not found
 components:
   schemas:
     Shop:
       required:
-      - id
+      - address
+      - description
       - name
-      - natural_key
       type: object
       properties:
         id:
           type: number
+          readOnly: true
           example: 12334
         natural_key:
           type: string
-          example: 1234_4345
+          readOnly: true
+          example: Macelleria del Corso_100_100
         name:
           type: string
           example: Macelleria del Corso
@@ -131,9 +122,11 @@ components:
           example: Via Roma 133
         lat:
           type: number
+          readOnly: true
           example: 122
         lng:
           type: number
+          readOnly: true
           example: 133
         phone:
           type: string
@@ -147,25 +140,34 @@ components:
           example: Piccola bottega dal 1920
         is_deleted:
           type: boolean
+          readOnly: true
           example: false
         created_at:
           type: string
           format: date
+          readOnly: true
         updated_at:
           type: string
           format: date
+          readOnly: true
+        categories:
+          maxItems: 3
+          type: array
+          items:
+            type: number
     Category:
       required:
-      - id
       - name
       - natural_key
       type: object
       properties:
         id:
           type: number
+          readOnly: true
           example: 12334
         natural_key:
           type: string
+          readOnly: true
           example: 1234_4345
         name:
           type: string

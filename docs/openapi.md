@@ -1,7 +1,8 @@
 # EasyCollect API
 This is a simple API to manage EasyCollect
 
-## Version: 0.1.0
+
+## Version: 1.0.0
 
 **Contact information:**  
 you@your-company.com  
@@ -18,6 +19,14 @@ retrieve all shops
 ##### Description:
 
 Retrieve all available shops
+
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| filter | query | pass an optional search string for looking up name or description Shop | No | string |
+| categories_id | query | pass an optional search string for looking up Shop name or description | No | integer |
 
 ##### Responses
 
@@ -60,42 +69,5 @@ retrieve information of a single Shop
 
 | Code | Description |
 | ---- | ----------- |
-| 200 | Item deleted successfully |
-
-#### PUT
-##### Summary:
-
-Update a Shop
-
-##### Description:
-
-Add new Event in Event db
-
-##### Parameters
-
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| id | path | Numeric ID of the Shop to get | Yes | integer |
-
-##### Responses
-
-| Code | Description |
-| ---- | ----------- |
-| 200 | Entry inserted correctly |
-
-#### DELETE
-##### Summary:
-
-Delete shop from ID
-
-##### Parameters
-
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| id | path | Numeric ID of the user to get | Yes | integer |
-
-##### Responses
-
-| Code | Description |
-| ---- | ----------- |
-| 200 | Item deleted successfully |
+| 200 | Item retrieved successfully |
+| 404 | Item not found |
