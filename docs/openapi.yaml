@@ -1,0 +1,172 @@
+openapi: 3.0.0
+info:
+  title: EasyCollect API
+  description: This is a simple API to manage EasyCollect
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.0
+servers:
+- url: https://virtserver.swaggerhub.com/fcolasante/easyCollect/0.1.0
+  description: EasyCollect API
+tags:
+- name: shops
+  description: Shop descriptions such as name, location, telephone
+- name: categories
+  description: Enums such as Fruttivendolo, Macelleria,...
+paths:
+  /shops:
+    get:
+      tags:
+      - shops
+      summary: retrieve all shops
+      description: Retrieve all available shops
+      operationId: getShops
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Shop'
+        "400":
+          description: bad input parameter
+    post:
+      tags:
+      - shops
+      summary: adds a Shop
+      description: Adds a Shop to the system
+      operationId: addShop
+      requestBody:
+        description: Shop item to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Shop'
+      responses:
+        "201":
+          description: item created
+        "400":
+          description: invalid input, object invalid
+        "409":
+          description: an existing item already exists
+  /shops/{id}:
+    get:
+      tags:
+      - shops
+      summary: retrieve information of a single Shop
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the Shop to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+        example: 1000
+      responses:
+        "200":
+          description: Item deleted successfully
+    put:
+      tags:
+      - shops
+      summary: Update a Shop
+      description: Add new Event in Event db
+      operationId: putEvent
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the Shop to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+        example: 1000
+      responses:
+        "200":
+          description: Entry inserted correctly
+    delete:
+      tags:
+      - shops
+      summary: Delete shop from ID
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the user to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+        example: 1000
+      responses:
+        "200":
+          description: Item deleted successfully
+components:
+  schemas:
+    Shop:
+      required:
+      - id
+      - name
+      - natural_key
+      type: object
+      properties:
+        id:
+          type: number
+          example: 12334
+        natural_key:
+          type: string
+          example: 1234_4345
+        name:
+          type: string
+          example: Macelleria del Corso
+        addess:
+          type: string
+          example: Via Roma 133
+        lat:
+          type: number
+          example: 122
+        lng:
+          type: number
+          example: 133
+        phone:
+          type: string
+          example: 333-5607123
+        telegram:
+          type: string
+        facebook:
+          type: string
+        description:
+          type: string
+          example: Piccola bottega dal 1920
+        is_deleted:
+          type: boolean
+          example: false
+        created_at:
+          type: string
+          format: date
+        updated_at:
+          type: string
+          format: date
+    Category:
+      required:
+      - id
+      - name
+      - natural_key
+      type: object
+      properties:
+        id:
+          type: number
+          example: 12334
+        natural_key:
+          type: string
+          example: 1234_4345
+        name:
+          type: string
+          example: Macelleria
