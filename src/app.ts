@@ -47,8 +47,8 @@ app.post('/shops', async (req, res) => {
                     name: req.params.name
                 }
             });
-            shopHasCategories.categories_id = category.id.toString();// not sure about string or Int, let's discuss later
-            shopHasCategories.shops_id = shopLookup.id.toString();   // not sure about string or Int, let's discuss later
+            shopHasCategories.categories_id = category.id;
+            shopHasCategories.shops_id = shopLookup.id;
             shopHasCategories.natural_key = shopHasCategories.categories_id + "_" + shopHasCategories.shops_id;
             await shopHasCategories.save();
         }

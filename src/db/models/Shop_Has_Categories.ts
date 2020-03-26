@@ -17,10 +17,10 @@ export class ShopHasCategories extends BaseEntity {
     natural_key: string;
 
     @Column()
-    categories_id: string;
+    categories_id: number;
 
     @Column()
-    shops_id: string;
+    shops_id: number;
 
     @CreateDateColumn()
     created_at: Date;
