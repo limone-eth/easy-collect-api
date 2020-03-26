@@ -85,3 +85,17 @@ retrieve information of a single Shop
 | ---- | ----------- |
 | 200 | Item retrieved successfully |
 | 404 | Item not found |
+
+### /categories/
+
+#### GET
+##### Summary:
+
+retrieve the list of available categories
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Item retrieved successfully |
+| 404 | Item not found |
