@@ -3,7 +3,6 @@ import {MigrationInterface, QueryRunner, TableColumn} from "typeorm";
 export class AlterShopTable1585228402768 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
-        await queryRunner.dropColumn('shops', "categories_id");
         await queryRunner.addColumn('shops', new TableColumn({
             type: "varchar",
             name: "city",
