@@ -1,4 +1,5 @@
 import express from 'express';
+import * as dotenv from "dotenv";
 import * as bodyParser from 'body-parser';
 import {Shop} from "./db/models/Shop.model";
 import {connect} from "./db/db";
@@ -10,6 +11,8 @@ import node_geocoder = require("node-geocoder");
 import {Options} from "node-geocoder";
 import {IndexRoute} from "./api";
 import {ErrorHandler} from "./components/ErrorHandler";
+
+dotenv.config({path: 'local.env'});
 
 connect();
 
