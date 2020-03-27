@@ -15,7 +15,7 @@ export class CreateV1 extends RequestController {
             name: Joi.string().required(),
             address: Joi.string().required(),
             description: Joi.string().required(),
-            categories_ids: Joi.array().items(number()).required().length(3),
+            categories_ids: Joi.array().items(number()).required().max(3),
             telegram: Joi.string(),
             facebook: Joi.string(),
             phone: Joi.string(),
