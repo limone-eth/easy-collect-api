@@ -2,7 +2,7 @@ import {AbstractRoutes, MethodRoutes} from "../../routing-utilities/AbstractRout
 import {Route} from "../../routing-utilities/Route";
 import {PathRoute} from "../../routing-utilities/PathRoute";
 import {RetrieveV1} from "./retrieve/Retrieve.v1";
-import {RetrieveSingleV1} from "./retrieve_single/RetrieveSingle.v1";
+import {RetrieveSingleV1} from "./retrieve-single/RetrieveSingle.v1";
 import {CreateV1} from "./create/Create.v1";
 
 export class ShopsRoutes extends AbstractRoutes {

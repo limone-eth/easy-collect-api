@@ -9,6 +9,8 @@ import {
 import {Category} from "./Category.model";
 import {Options} from "node-geocoder";
 import node_geocoder = require("node-geocoder");
+import {CustomError} from "../../routing-utilities/CustomError";
+import {XError} from "../../routing-utilities/XError";
 
 @Entity('shops')
 export class Shop extends BaseEntity {
@@ -39,6 +41,9 @@ export class Shop extends BaseEntity {
 
     @Column()
     phone: string;
+
+    @Column()
+    website: string;
 
     @Column()
     telegram: string;
@@ -72,6 +77,10 @@ export class Shop extends BaseEntity {
     })
     categories: Category[];
 
+    /**
+     * ERRORS
+     */
+    static readonly COORDINATES_NOT_FOUND_ERROR = new CustomError(2, 'coordinates_not_found_error');
 
     /**
      * METHODS
@@ -84,8 +93,13 @@ export class Shop extends BaseEntity {
         const geocoder = node_geocoder(options);
 
         const response = await geocoder.geocode(this.address);
-        this.lat = response[0].latitude;
-        this.lng = response[0].longitude;
+        try {
+            this.lat = response[0].latitude;
+            this.lng = response[0].longitude;
+        } catch (error){
+            throw new XError(Shop.COORDINATES_NOT_FOUND_ERROR,419,'Invalid address: coordinates not found')
+        }
+
         return this;
     }
 }

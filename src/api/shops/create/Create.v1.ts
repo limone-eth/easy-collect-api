@@ -14,8 +14,11 @@ export class CreateV1 extends RequestController {
         body: Joi.object().keys({
             name: Joi.string().required(),
             address: Joi.string().required(),
+            city: Joi.string().required(),
+            cap: Joi.string().required(),
             description: Joi.string().required(),
             categories_ids: Joi.array().items(number()).required().max(3),
+            website: Joi.string(),
             telegram: Joi.string(),
             facebook: Joi.string(),
             phone: Joi.string(),
@@ -26,10 +29,13 @@ export class CreateV1 extends RequestController {
         let shop = new Shop();
         shop.name = req.body.name;
         shop.address = req.body.address;
+        shop.city = req.body.city;
+        shop.cap = req.body.cap;
         shop = await shop.setCoordinatesFromAddress();
         shop.natural_key = shop.name.toLowerCase() + "_" + shop.lat + "_" + shop.lng;
         shop.description = req.body.description;
         shop.phone = req.body.phone;
+        shop.website = req.body.website;
         shop.telegram = req.body.telegram;
         shop.facebook = req.body.facebook;
         shop.categories = [];
