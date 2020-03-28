@@ -31,7 +31,12 @@ export class CreateV1 extends RequestController {
         shop.address = req.body.address;
         shop.city = req.body.city;
         shop.cap = req.body.cap;
-        shop = await shop.setCoordinatesFromAddress();
+        if (req.body.lat && req.body.lng){
+            shop.lat = req.body.lat;
+            shop.lng = req.body.lng;
+        } else {
+            shop = await shop.setCoordinatesFromAddress();
+        }
         shop.natural_key = shop.name.toLowerCase() + "_" + shop.lat + "_" + shop.lng;
         shop.description = req.body.description;
         shop.phone = req.body.phone;
