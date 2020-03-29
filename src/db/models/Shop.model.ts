@@ -92,7 +92,11 @@ export class Shop extends BaseEntity {
         };
         const geocoder = node_geocoder(options);
 
-        const response = await geocoder.geocode(this.address + " " + this.city + " " + this.cap);
+        const response = await geocoder.geocode({
+            address: this.address,
+            zipcode: this.cap,
+            country: "Italy"
+        });
         try {
             this.lat = response[0].latitude;
             this.lng = response[0].longitude;
