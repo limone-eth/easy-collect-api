@@ -1,16 +1,16 @@
 import express from 'express';
 import * as dotenv from "dotenv";
 import * as bodyParser from 'body-parser';
-import {Shop} from "./db/models/Shop.model";
 import {connect} from "./db/db";
-import {ShopHasCategories} from "./db/models/Shop_Has_Categories";
-import {Column, createQueryBuilder, Like} from "typeorm";
-import {Category} from './db/models/Category.model';
 
-import node_geocoder = require("node-geocoder");
-import {Options} from "node-geocoder";
 import {IndexRoute} from "./api";
 import {ErrorHandler} from "./components/ErrorHandler";
+import * as Sentry from '@sentry/node';
+
+Sentry.init({ dsn: 'https://0d6a6bffe82645c09ca26f142ecebd7c@sentry.io/5179184' });
+
+
+
 
 dotenv.config({path: 'local.env'});
 
@@ -18,6 +18,17 @@ connect();
 
 
 const app = express();
+
+// The request handler must be the first middleware on the app
+app.use(Sentry.Handlers.errorHandler({
+    shouldHandleError(error) {
+        // Capture only 500 errors
+        if (error.status === 500) {
+            return true
+        }
+        return false
+    }
+}));
 
 app.use(bodyParser.json({
     limit: '50mb',
