@@ -7,9 +7,6 @@ import {IndexRoute} from "./api";
 import {ErrorHandler} from "./components/ErrorHandler";
 import * as Sentry from '@sentry/node';
 
-Sentry.init({ dsn: 'https://0d6a6bffe82645c09ca26f142ecebd7c@sentry.io/5179184' });
-
-
 
 
 dotenv.config({path: 'local.env'});
@@ -19,16 +16,20 @@ connect();
 
 const app = express();
 
+if (process.env.NODE_ENV === 'production'){
+    Sentry.init({ dsn: 'https://0d6a6bffe82645c09ca26f142ecebd7c@sentry.io/5179184' });
 // The request handler must be the first middleware on the app
-app.use(Sentry.Handlers.errorHandler({
-    shouldHandleError(error) {
-        // Capture only 500 errors
-        if (error.status === 500) {
-            return true
+    app.use(Sentry.Handlers.errorHandler({
+        shouldHandleError(error) {
+            // Capture only 500 errors
+            if (error.status === 500) {
+                return true
+            }
+            return false
         }
-        return false
-    }
-}));
+    }));
+}
+
 
 app.use(bodyParser.json({
     limit: '50mb',
