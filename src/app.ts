@@ -7,12 +7,9 @@ import {IndexRoute} from "./api";
 import {ErrorHandler} from "./components/ErrorHandler";
 import * as Sentry from '@sentry/node';
 
-
-
 dotenv.config({path: 'local.env'});
 
 connect();
-
 
 const app = express();
 
