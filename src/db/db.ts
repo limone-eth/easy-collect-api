@@ -8,6 +8,7 @@ export let connect = async () => {
         "database":process.env.DB_NAME,
         "synchronize": false,
         "logging": true,
+        "migrationsRun": true,
         "migrationsTableName": "custom_migration_table",
         "entities": [
             __dirname + '/models/*.js'
