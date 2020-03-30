@@ -40,9 +40,27 @@ export class CreateV1 extends RequestController {
         shop.natural_key = shop.name.toLowerCase() + "_" + shop.lat + "_" + shop.lng;
         shop.description = req.body.description;
         shop.phone = req.body.phone;
-        shop.website = req.body.website;
-        shop.telegram = req.body.telegram;
-        shop.facebook = req.body.facebook;
+        if (req.body.website){
+            if (req.body.website.includes("http://") || req.body.website.includes("https://")){
+                shop.website = req.body.website;
+            } else {
+                shop.website = "http://" + req.body.website;
+            }
+        }
+        if (req.body.telegram){
+            if (req.body.telegram.includes("https://")){
+                shop.telegram = req.body.telegram;
+            } else {
+                shop.telegram = "https://" + req.body.telegram;
+            }
+        }
+        if (req.body.facebook){
+            if (req.body.facebook.includes("https://")){
+                shop.facebook = req.body.facebook;
+            } else {
+                shop.facebook = "https://" + req.body.facebook;
+            }
+        }
         shop.categories = [];
         await shop.save();
         for (const cat_id of req.body.categories_ids) {

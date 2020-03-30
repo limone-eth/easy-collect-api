@@ -49,7 +49,7 @@ export class Shop extends BaseEntity {
     telegram: string;
 
     @Column()
-    facebook: number;
+    facebook: string;
 
     @Column()
     description: string;
