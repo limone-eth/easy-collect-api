@@ -17,7 +17,8 @@
     "start": "ts-node .",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
-    "test": "mocha"
+    "test": "mocha",
+    "server": "node dist/src/index.js"
   },
   "keywords": [
     "rest-api",
