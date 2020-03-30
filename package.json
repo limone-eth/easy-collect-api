@@ -13,7 +13,7 @@
   "scripts": {
     "prebuild": "rm -rf dist/* && tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc && cp -rf package.json dist/package.json",
-    "build:prod": "tsc && cp -rf package.json dist/package.json && node dist/src/index.js",
+    "build:prod": "tsc && cp -rf package.json dist/package.json",
     "prestart": "npm run build",
     "start": "ts-node .",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
