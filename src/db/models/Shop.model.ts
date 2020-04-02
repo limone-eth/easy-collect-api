@@ -11,6 +11,7 @@ import {Options} from "node-geocoder";
 import node_geocoder = require("node-geocoder");
 import {CustomError} from "../../routing-utilities/CustomError";
 import {XError} from "../../routing-utilities/XError";
+import * as request from "superagent"
 
 @Entity('shops')
 export class Shop extends BaseEntity {
@@ -81,27 +82,49 @@ export class Shop extends BaseEntity {
      * ERRORS
      */
     static readonly COORDINATES_NOT_FOUND_ERROR = new CustomError(2, 'coordinates_not_found_error');
+    static readonly AMBIGUOUS_ADDRESS_ERROR = new CustomError(3, 'ambiguous_address_error');
 
     /**
      * METHODS
      */
     async setCoordinatesFromAddress(): Promise<Shop> {
-        const options: Options = {
-            provider: 'opencage',
-            apiKey: process.env.OPEN_CAGE_API_KEY
+        /*const options: Options = {
+            provider: 'openstreetmap',
         };
         const geocoder = node_geocoder(options);
 
-        const response = await geocoder.geocode({
+        let response = await geocoder.geocode({
             address: this.address,
-            zipcode: this.cap,
-            country: "Italy"
-        });
+            city: this.city,
+            postalcode: this.cap,
+            country: "Italy",
+        });*/
+
+        // tslint:disable-next-line:no-shadowed-variable
+        const response:any = await request.get("https://nominatim.openstreetmap.org/search")
+            .query({street: this.address})
+            .query({city: this.city})
+            .query({cap: this.cap})
+            .query({email: 'simonestaffa96@gmail.com'})
+            .query({format: 'json'});
+
+        if (response.body.length > 0){
+            response.body = response.body.filter((r: any) => {
+                return r.display_name.includes(this.cap.toString());
+            });
+        }
         try {
-            this.lat = response[0].latitude;
-            this.lng = response[0].longitude;
-        } catch (error){
-            throw new XError(Shop.COORDINATES_NOT_FOUND_ERROR,419,'Invalid address: coordinates not found')
+            this.lat = response.body[0].lat;
+            this.lng = response.body[0].lon;
+            if (!response.body[0].display_name.includes(this.cap.toString())) {
+                throw new XError(Shop.AMBIGUOUS_ADDRESS_ERROR, 419, 'The address specified is ambiguous. Please be sure using the correct city and zipcode.')
+            }
+        } catch (error) {
+            if (error instanceof XError) {
+                throw error;
+            } else {
+                throw new XError(Shop.COORDINATES_NOT_FOUND_ERROR, 419, 'Invalid address: coordinates not found')
+            }
         }
 
         return this;
