@@ -1,5 +1,11 @@
 import {createConnection} from "typeorm";
+const isPortReachable = require('is-port-reachable');
 export let connect = async () => {
+    let dbStatus = false;
+
+    while (!dbStatus) {
+        dbStatus = await isPortReachable(3306, {host: process.env.DB_HOSTNAME});
+    }
     const connection = await createConnection({
         "type": "mysql",
         "host":process.env.DB_HOSTNAME,
