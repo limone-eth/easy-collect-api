@@ -9,7 +9,9 @@ import * as Sentry from '@sentry/node';
 
 dotenv.config({path: 'local.env'});
 
-connect();
+connect().then(() => {
+    console.log("[DB] Connected")
+});
 
 const app = express();
 
