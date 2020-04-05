@@ -22,6 +22,7 @@ export class CreateV1 extends RequestController {
             telegram: Joi.string(),
             facebook: Joi.string(),
             phone: Joi.string(),
+            accepts_terms_and_conditions: Joi.boolean(),
         }).or('facebook', 'telegram','phone')
     });
 
@@ -31,6 +32,7 @@ export class CreateV1 extends RequestController {
         shop.address = req.body.address;
         shop.city = req.body.city;
         shop.cap = req.body.cap;
+        shop.accepts_terms_and_conditions = req.body.accepts_terms_and_conditions;
         if (req.body.lat && req.body.lng){
             shop.lat = req.body.lat;
             shop.lng = req.body.lng;

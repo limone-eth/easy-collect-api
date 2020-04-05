@@ -58,6 +58,9 @@ export class Shop extends BaseEntity {
     @Column()
     is_deleted: boolean;
 
+    @Column()
+    accepts_terms_and_conditions: boolean;
+
     @CreateDateColumn()
     created_at: Date;
 
