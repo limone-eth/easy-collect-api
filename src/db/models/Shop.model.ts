@@ -88,17 +88,6 @@ export class Shop extends BaseEntity {
      * METHODS
      */
     async setCoordinatesFromAddress(): Promise<Shop> {
-        /*const options: Options = {
-            provider: 'openstreetmap',
-        };
-        const geocoder = node_geocoder(options);
-
-        let response = await geocoder.geocode({
-            address: this.address,
-            city: this.city,
-            postalcode: this.cap,
-            country: "Italy",
-        });*/
 
         // tslint:disable-next-line:no-shadowed-variable
         const response:any = await request.get("https://nominatim.openstreetmap.org/search")
