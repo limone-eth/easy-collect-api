@@ -100,17 +100,17 @@ export class Shop extends BaseEntity {
             .query({email: 'simonestaffa96@gmail.com'})
             .query({format: 'json'});
 
-        if (response.body.length > 0){
+        /*if (response.body.length > 0){
             response.body = response.body.filter((r: any) => {
                 return r.display_name.includes(this.cap.toString());
             });
-        }
+        }*/
         try {
             this.lat = response.body[0].lat;
             this.lng = response.body[0].lon;
-            if (!response.body[0].display_name.includes(this.cap.toString())) {
+            /*if (!response.body[0].display_name.includes(this.cap.toString())) {
                 throw new XError(Shop.AMBIGUOUS_ADDRESS_ERROR, 419, 'The address specified is ambiguous. Please be sure using the correct city and zipcode.')
-            }
+            }*/
         } catch (error) {
             if (error instanceof XError) {
                 throw error;
