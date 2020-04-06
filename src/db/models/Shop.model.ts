@@ -102,13 +102,13 @@ export class Shop extends BaseEntity {
 
         if (response.body.length > 0){
             response.body = response.body.filter((r: any) => {
-                return r.display_name.includes(this.city);
+                return r.display_name.toLowerCase().includes(this.city.toLowerCase());
             });
         }
         try {
             this.lat = response.body[0].lat;
             this.lng = response.body[0].lon;
-            if (!response.body[0].display_name.includes(this.city.toString())) {
+            if (!response.body[0].display_name.toLowerCase().includes(this.city.toLowerCase())) {
                 throw new XError(Shop.AMBIGUOUS_ADDRESS_ERROR, 419, 'The address specified is ambiguous. Please be sure using the correct city and zipcode.')
             }
         } catch (error) {
