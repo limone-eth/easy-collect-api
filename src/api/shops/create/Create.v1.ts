@@ -8,6 +8,8 @@ import {Shop} from "../../../db/models/Shop.model";
 import {ShopHasCategories} from "../../../db/models/Shop_Has_Categories";
 import {number} from "joi";
 
+const webSiteFieldExpression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/i;
+const webSiteFieldRegex = new RegExp(webSiteFieldExpression);
 
 export class CreateV1 extends RequestController {
     validate?: Joi.JoiObject = Joi.object().keys({
@@ -18,9 +20,9 @@ export class CreateV1 extends RequestController {
             cap: Joi.string().required(),
             description: Joi.string().required(),
             categories_ids: Joi.array().items(number()).required().max(3),
-            website: Joi.string(),
-            telegram: Joi.string(),
-            facebook: Joi.string(),
+            website: Joi.string().regex(webSiteFieldRegex),
+            telegram: Joi.string().regex(webSiteFieldRegex),
+            facebook: Joi.string().regex(webSiteFieldRegex),
             phone: Joi.string(),
             accepts_terms_and_conditions: Joi.boolean(),
         }).or('facebook', 'telegram','phone')
@@ -50,14 +52,14 @@ export class CreateV1 extends RequestController {
             }
         }
         if (req.body.telegram){
-            if (req.body.telegram.includes("https://")){
+            if (req.body.telegram.includes("https://") || req.body.telegram.includes("http://")){
                 shop.telegram = req.body.telegram;
             } else {
                 shop.telegram = "https://" + req.body.telegram;
             }
         }
         if (req.body.facebook){
-            if (req.body.facebook.includes("https://")){
+            if (req.body.facebook.includes("https://") || req.body.facebook.includes("http://")){
                 shop.facebook = req.body.facebook;
             } else {
                 shop.facebook = "https://" + req.body.facebook;
