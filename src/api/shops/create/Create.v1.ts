@@ -52,14 +52,14 @@ export class CreateV1 extends RequestController {
             }
         }
         if (req.body.telegram){
-            if (req.body.telegram.includes("https://")){
+            if (req.body.telegram.includes("https://") || req.body.telegram.includes("http://")){
                 shop.telegram = req.body.telegram;
             } else {
                 shop.telegram = "https://" + req.body.telegram;
             }
         }
         if (req.body.facebook){
-            if (req.body.facebook.includes("https://")){
+            if (req.body.facebook.includes("https://") || req.body.facebook.includes("http://")){
                 shop.facebook = req.body.facebook;
             } else {
                 shop.facebook = "https://" + req.body.facebook;
