@@ -21,8 +21,8 @@ export class CreateV1 extends RequestController {
             description: Joi.string().required(),
             categories_ids: Joi.array().items(number()).required().max(3),
             website: Joi.string().regex(webSiteFieldRegex),
-            telegram: Joi.string(),
-            facebook: Joi.string(),
+            telegram: Joi.string().regex(webSiteFieldRegex),
+            facebook: Joi.string().regex(webSiteFieldRegex),
             phone: Joi.string(),
             accepts_terms_and_conditions: Joi.boolean(),
         }).or('facebook', 'telegram','phone')
