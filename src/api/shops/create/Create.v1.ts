@@ -8,6 +8,8 @@ import {Shop} from "../../../db/models/Shop.model";
 import {ShopHasCategories} from "../../../db/models/Shop_Has_Categories";
 import {number} from "joi";
 
+const webSiteFieldExpression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+const webSiteFieldRegex = new RegExp(webSiteFieldExpression);
 
 export class CreateV1 extends RequestController {
     validate?: Joi.JoiObject = Joi.object().keys({
@@ -18,7 +20,7 @@ export class CreateV1 extends RequestController {
             cap: Joi.string().required(),
             description: Joi.string().required(),
             categories_ids: Joi.array().items(number()).required().max(3),
-            website: Joi.string(),
+            website: Joi.string().regex(webSiteFieldRegex),
             telegram: Joi.string(),
             facebook: Joi.string(),
             phone: Joi.string(),
