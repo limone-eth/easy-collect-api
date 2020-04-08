@@ -3,7 +3,6 @@
 import {RequestController} from "../../../routing-utilities/RequestController";
 import {Request, Response, NextFunction} from "express";
 import * as Joi from "joi";
-import {Category} from "../../../db/models/Category.model";
 import {XError} from "../../../routing-utilities/XError";
 import {Shop} from "../../../db/models/Shop.model";
 import * as request from "superagent";
@@ -18,7 +17,7 @@ export class CoordinatesFromAddressV1 extends RequestController {
 
     });
 
-    async retrieveCoordinatesFromAddress(address: string, city: string, cap: string): Promise<{ lat: number, lng: number }> {
+    async retrieveCoordinatesFromAddress(address: any, city: any, cap: any): Promise<{ lat: number, lng: number }> {
         const queryObj: any = {
             email: "colligo.shop@gmail.com",
             format: "json",
