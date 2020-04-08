@@ -10,16 +10,16 @@ import * as request from "superagent";
 
 export class CoordinatesFromAddressV1 extends RequestController {
     validate?: Joi.JoiObject = Joi.object().keys({
-        query: Joi.object().keys({
+        query: {
             address: Joi.string().allow(null),
             city: Joi.string().allow(null),
             cap: Joi.number().allow(null)
-        }).or('address','city','cap'),
+        },
 
     });
 
-    async retrieveCoordinatesFromAddress(address: string, city: string, cap: string): Promise<{lat: number, lng: number}> {
-        const queryObj:any = {
+    async retrieveCoordinatesFromAddress(address: string, city: string, cap: string): Promise<{ lat: number, lng: number }> {
+        const queryObj: any = {
             email: "colligo.shop@gmail.com",
             format: "json",
         };
@@ -33,7 +33,7 @@ export class CoordinatesFromAddressV1 extends RequestController {
             queryObj.postalcode = cap;
         }
         // tslint:disable-next-line:no-shadowed-variable
-        const response:any = await request.get("https://nominatim.openstreetmap.org/search")
+        const response: any = await request.get("https://nominatim.openstreetmap.org/search")
             .query(queryObj);
         try {
             const lat: number = response.body[0].lat;
@@ -51,7 +51,7 @@ export class CoordinatesFromAddressV1 extends RequestController {
         }
     }
 
-    async exec(req: Request, res: Response, next: NextFunction): Promise<{lat: number, lng: number}> {
+    async exec(req: Request, res: Response, next: NextFunction): Promise<{ lat: number, lng: number }> {
         return await this.retrieveCoordinatesFromAddress(req.query.address, req.query.city, req.query.cap);
     }
 
