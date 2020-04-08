@@ -44,6 +44,9 @@ export class Shop extends BaseEntity {
     phone: string;
 
     @Column()
+    whatsapp: string;
+
+    @Column()
     website: string;
 
     @Column()
