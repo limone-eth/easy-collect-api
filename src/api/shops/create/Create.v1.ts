@@ -24,6 +24,7 @@ export class CreateV1 extends RequestController {
             telegram: Joi.string().regex(webSiteFieldRegex),
             facebook: Joi.string().regex(webSiteFieldRegex),
             phone: Joi.string(),
+            whatsapp: Joi.string(),
             accepts_terms_and_conditions: Joi.boolean(),
         }).or('facebook', 'telegram','phone')
     });
@@ -44,6 +45,14 @@ export class CreateV1 extends RequestController {
         shop.natural_key = shop.name.toLowerCase() + "_" + shop.lat + "_" + shop.lng;
         shop.description = req.body.description;
         shop.phone = req.body.phone;
+        if (req.body.whatsapp){
+            //italian numbers only
+            const whatsapp = req.body.whatsapp
+            if(whatsapp.startsWith("+39"))
+                shop.whatsapp = 'https://api.whatsapp.com/send?phone=' + whatsapp;
+            else 
+            shop.whatsapp = 'https://api.whatsapp.com/send?phone=+39' + whatsapp;
+        }
         if (req.body.website){
             if (req.body.website.includes("http://") || req.body.website.includes("https://")){
                 shop.website = req.body.website;
