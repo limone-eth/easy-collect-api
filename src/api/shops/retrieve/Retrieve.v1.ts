@@ -24,11 +24,11 @@ export class RetrieveV1 extends RequestController {
         const address = req.query.address;
         let lat = null;
         let lng = null;
-        if (req.query.address){
+        /*if (req.query.address){
             const coordinates = await this.retrieveCoordinatesFromAddress(address);
             lat = coordinates.lat;
             lng = coordinates.lng;
-        }
+        }*/
         let shops;
         if (req.query.filter && categories_id) {
             shops = await createQueryBuilder(Shop, "shops")

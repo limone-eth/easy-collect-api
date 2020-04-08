@@ -46,11 +46,11 @@ export class CreateV1 extends RequestController {
         shop.description = req.body.description;
         shop.phone = req.body.phone;
         if (req.body.whatsapp){
-            //italian numbers only
+            // italian numbers only
             const whatsapp = req.body.whatsapp
             if(whatsapp.startsWith("+39"))
                 shop.whatsapp = 'https://api.whatsapp.com/send?phone=' + whatsapp;
-            else 
+            else
             shop.whatsapp = 'https://api.whatsapp.com/send?phone=+39' + whatsapp;
         }
         if (req.body.website){
