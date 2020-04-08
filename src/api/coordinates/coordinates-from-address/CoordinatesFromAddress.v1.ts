@@ -18,7 +18,7 @@ export class CoordinatesFromAddressV1 extends RequestController {
 
     });
 
-    async retrieveCoordinatesFromAddress(address?: string, city?: string, cap?: string): Promise<{lat: number, lng: number}> {
+    async retrieveCoordinatesFromAddress(address: string, city: string, cap: string): Promise<{lat: number, lng: number}> {
         const queryObj:any = {
             email: "colligo.shop@gmail.com",
             format: "json",
