@@ -22,8 +22,8 @@ export class RetrieveV1 extends RequestController {
         const filter = "%" + req.query.filter + "%";
         const categories_id = req.query.categories_id;
         const address = req.query.address;
-        let lat = null;
-        let lng = null;
+        const lat: number = null;
+        const lng: number = null;
         /*if (req.query.address){
             const coordinates = await this.retrieveCoordinatesFromAddress(address);
             lat = coordinates.lat;

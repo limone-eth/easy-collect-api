@@ -36,8 +36,8 @@ export class CoordinatesFromAddressV1 extends RequestController {
         const response:any = await request.get("https://nominatim.openstreetmap.org/search")
             .query(queryObj);
         try {
-            const lat = response.body[0].lat;
-            const lng = response.body[0].lon;
+            const lat: number = response.body[0].lat;
+            const lng: number = response.body[0].lon;
             return {
                 lat,
                 lng
