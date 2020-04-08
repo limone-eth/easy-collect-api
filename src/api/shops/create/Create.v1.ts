@@ -26,7 +26,7 @@ export class CreateV1 extends RequestController {
             phone: Joi.string(),
             whatsapp: Joi.string(),
             accepts_terms_and_conditions: Joi.boolean(),
-        }).or('facebook', 'telegram','phone')
+        }).or('facebook', 'telegram','phone','whatsapp')
     });
 
     async createShop(req: Request): Promise<Shop> {
