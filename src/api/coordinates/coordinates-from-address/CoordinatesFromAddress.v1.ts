@@ -35,17 +35,9 @@ export class CoordinatesFromAddressV1 extends RequestController {
         // tslint:disable-next-line:no-shadowed-variable
         const response:any = await request.get("https://nominatim.openstreetmap.org/search")
             .query(queryObj);
-        /*if (response.body.length > 0){
-            response.body = response.body.filter((r: any) => {
-                return !r.display_name.includes(cap.toString());
-            });
-        }*/
         try {
             const lat = response.body[0].lat;
             const lng = response.body[0].lon;
-            /*if (!response.body[0].display_name.includes(cap.toString())) {
-                throw new XError(Shop.AMBIGUOUS_ADDRESS_ERROR, 419, 'The address specified is ambiguous. Please be sure using the correct city and zipcode.')
-            }*/
             return {
                 lat,
                 lng
