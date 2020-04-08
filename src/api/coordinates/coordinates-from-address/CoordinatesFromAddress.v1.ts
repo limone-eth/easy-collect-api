@@ -10,23 +10,31 @@ import * as request from "superagent";
 
 export class CoordinatesFromAddressV1 extends RequestController {
     validate?: Joi.JoiObject = Joi.object().keys({
-        query: {
-            address: Joi.string().required(),
+        query: Joi.object().keys({
+            address: Joi.string().allow(null),
             city: Joi.string().allow(null),
             cap: Joi.number().allow(null)
-        },
+        }).or('address','city','cap'),
 
     });
 
-    async retrieveCoordinatesFromAddress(address: string, city?: string, cap?: string): Promise<{lat: number, lng: number}> {
+    async retrieveCoordinatesFromAddress(address?: string, city?: string, cap?: string): Promise<{lat: number, lng: number}> {
+        const queryObj:any = {
+            email: "colligo.shop@gmail.com",
+            format: "json",
+        };
+        if (address) {
+            queryObj.street = address
+        }
+        if (city) {
+            queryObj.city = city;
+        }
+        if (cap) {
+            queryObj.postalcode = cap;
+        }
         // tslint:disable-next-line:no-shadowed-variable
         const response:any = await request.get("https://nominatim.openstreetmap.org/search")
-            .query({street: address})
-            .query({"city": city})
-            .query({"cap:": cap})
-            .query({email: 'simonestaffa96@gmail.com'})
-            .query({format: 'json'});
-
+            .query(queryObj);
         /*if (response.body.length > 0){
             response.body = response.body.filter((r: any) => {
                 return !r.display_name.includes(cap.toString());
