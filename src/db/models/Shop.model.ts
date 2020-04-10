@@ -62,6 +62,9 @@ export class Shop extends BaseEntity {
     @Column()
     accepts_terms_and_conditions: boolean;
 
+    @Column()
+    messenger: string;
+
     @CreateDateColumn()
     created_at: Date;
 
@@ -141,6 +144,7 @@ export class Shop extends BaseEntity {
             }
             throw err
         });
+        this.messenger = "https://m.me/" + this.facebook.substring(8).split('/')[1];
         return this;
     }
 }
