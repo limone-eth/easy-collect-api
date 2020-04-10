@@ -86,6 +86,7 @@ export class Shop extends BaseEntity {
      */
     static readonly COORDINATES_NOT_FOUND_ERROR = new CustomError(2, 'coordinates_not_found_error');
     static readonly AMBIGUOUS_ADDRESS_ERROR = new CustomError(3, 'ambiguous_address_error');
+    static readonly WRONG_FACEBOOK_PAG_LINK = new CustomError(4,'pagina Facebook errata')
 
     /**
      * METHODS
@@ -120,5 +121,17 @@ export class Shop extends BaseEntity {
         }
 
         return this;
+    }
+    async checkFacebookPage(): Promise<Shop> {
+        console.log('FACEBOOK ', this.facebook)
+        await request.get(this.facebook)
+        .then(res => {
+            if(res.status === 404) {
+                console.log('ERRORE---------------------------')
+                throw new XError(Shop.WRONG_FACEBOOK_PAG_LINK, 419, 'Link alla Pagina Facebook errato')
+            }
+        })
+        return this;
+
     }
 }
