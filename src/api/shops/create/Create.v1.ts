@@ -73,6 +73,7 @@ export class CreateV1 extends RequestController {
             } else {
                 shop.facebook = "https://" + req.body.facebook;
             }
+            shop = await shop.checkFacebookPage();
         }
         shop.categories = [];
         await shop.save();

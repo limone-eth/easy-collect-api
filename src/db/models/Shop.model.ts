@@ -12,6 +12,7 @@ import node_geocoder = require("node-geocoder");
 import {CustomError} from "../../routing-utilities/CustomError";
 import {XError} from "../../routing-utilities/XError";
 import * as request from "superagent"
+import rp from "request-promise";
 
 @Entity('shops')
 export class Shop extends BaseEntity {
@@ -64,6 +65,9 @@ export class Shop extends BaseEntity {
     @Column()
     accepts_terms_and_conditions: boolean;
 
+    @Column()
+    messenger: string;
+
     @CreateDateColumn()
     created_at: Date;
 
@@ -89,6 +93,7 @@ export class Shop extends BaseEntity {
      */
     static readonly COORDINATES_NOT_FOUND_ERROR = new CustomError(2, 'coordinates_not_found_error');
     static readonly AMBIGUOUS_ADDRESS_ERROR = new CustomError(3, 'ambiguous_address_error');
+    static readonly WRONG_FACEBOOK_PAGE_LINK = new CustomError(4, 'invalid_facebook_page_link')
 
     /**
      * METHODS
@@ -96,14 +101,14 @@ export class Shop extends BaseEntity {
     async setCoordinatesFromAddress(): Promise<Shop> {
 
         // tslint:disable-next-line:no-shadowed-variable
-        const response:any = await request.get("https://nominatim.openstreetmap.org/search")
+        const response: any = await request.get("https://nominatim.openstreetmap.org/search")
             .query({street: this.address})
             .query({city: this.city})
             .query({cap: this.cap})
             .query({email: 'simonestaffa96@gmail.com'})
             .query({format: 'json'});
 
-        if (response.body.length > 0){
+        if (response.body.length > 0) {
             response.body = response.body.filter((r: any) => {
                 return r.display_name.toLowerCase().includes(this.city.toLowerCase());
             });
@@ -122,6 +127,27 @@ export class Shop extends BaseEntity {
             }
         }
 
+        return this;
+    }
+
+    async checkFacebookPage(): Promise<Shop> {
+        await rp({
+            uri: this.facebook,
+            json: true,
+            headers: {
+                'User-Agent': 'Request-Promise'
+            },
+        }).then(res => {
+            if (res.status === 200) {
+                // LINK IS OK
+            }
+        }).catch(err => {
+            if (err.statusCode === 404){
+                throw new XError(Shop.WRONG_FACEBOOK_PAGE_LINK, 419, 'Invalid Facebook Link')
+            }
+            throw err
+        });
+        this.messenger = "https://m.me/" + this.facebook.substring(8).split('/')[1];
         return this;
     }
 }
