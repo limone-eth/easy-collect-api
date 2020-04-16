@@ -22,13 +22,11 @@ export class CoordinatesFromAddressV1 extends RequestController {
             email: "colligo.shop@gmail.com",
             format: "json",
         };
-        if (address) {
+        if (address && !city && !cap) {
+            throw new XError(Shop.MISSING_CAP_OR_CITY, 419, 'Missing city or CAP');
+        } else {
             queryObj.street = address
-        }
-        if (city) {
             queryObj.city = city;
-        }
-        if (cap) {
             queryObj.postalcode = cap;
         }
         // tslint:disable-next-line:no-shadowed-variable

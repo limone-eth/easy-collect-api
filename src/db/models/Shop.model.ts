@@ -93,7 +93,8 @@ export class Shop extends BaseEntity {
      */
     static readonly COORDINATES_NOT_FOUND_ERROR = new CustomError(2, 'coordinates_not_found_error');
     static readonly AMBIGUOUS_ADDRESS_ERROR = new CustomError(3, 'ambiguous_address_error');
-    static readonly WRONG_FACEBOOK_PAGE_LINK = new CustomError(4, 'invalid_facebook_page_link')
+    static readonly WRONG_FACEBOOK_PAGE_LINK = new CustomError(4, 'invalid_facebook_page_link');
+    static readonly MISSING_CAP_OR_CITY = new CustomError(5, 'missing_city_or_cap');
 
     /**
      * METHODS
